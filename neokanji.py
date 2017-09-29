@@ -4,19 +4,12 @@ import sys
 from os import listdir
 from IPython import embed
 import argparse
-import codex_extractor
 import config 
 
 logo = open("Logo", "r")
 log_img = logo.read()
 logo.close()
 print log_img
-
-# cypher_link_by_pdb = """
-#     MERGE (a:{key}{value:{value}})
-#     MERGE (b:pdb {pdb:{pdb}})
-#     CREATE (a)-[:HAS_PDB]-(b)
-# """
 
 cypher_clean_empty_comp = """
     MATCH (a:Compilation_Time{comp_time:"-"})
@@ -177,10 +170,6 @@ def main():
     parser = CustomParser()
     parser.add_argument("--input", "-i",
                         help="sets input folder")
-    parser.add_argument(
-        "--force", "-f",
-        help="force to download samples from CodexGigas",
-        action="store_true")
 
     args = parser.parse_args()
     # print args.input
@@ -224,7 +213,6 @@ def main():
                     add_office_last_saved(tx, file['Last_Saved'], file['MD5'])
                 except Exception:
                     pass
-            # # add_pdb_mw_rel(tx, , file['MD5
         tx.run(cypher_clean_empty_comp)
         tx.run(cypher_clean_empty_filetype)
         tx.run(cypher_clean_empty_filename)
@@ -234,5 +222,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-# TODO - Lector de pcaps?
